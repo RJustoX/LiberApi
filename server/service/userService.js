@@ -7,3 +7,7 @@ exports.getUsers = function () {
 exports.getUser = function (userId) {
     return userData.getUser(userId);
 }
+
+exports.postLogin = function (email, password) {
+    return userData.postLogin(email, password);
+}
