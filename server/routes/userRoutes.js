@@ -21,4 +21,9 @@ router.post('/login', async function (req, res) {
     res.json(userId.rows[0]['id_usuario']);
 });
 
+router.post('/logon', async function (req, res) {
+    const result = await userService.createNewUser(req.body);
+    res.json(result);
+});
+
 module.exports = router;
