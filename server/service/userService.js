@@ -33,6 +33,18 @@ exports.createNewUser = async function (user) {
     return result;
 }
 
+exports.finishLogon = function (user) {
+    console.log(user.vicioId);
+    if (user) {
+        userData.updateUserBasicInformation(user.id, user.birthDate, user.sex);
+        userData.insertVicio(user.id, user.vicioId);
+    }
+    return {
+        status: 1,
+        message: 'Cadastro finalizado!',
+    }
+}
+
 async function checkEmail(email) {
     const result = (await userData.checkEmail(email)).rowCount;
 

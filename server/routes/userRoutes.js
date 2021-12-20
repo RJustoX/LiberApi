@@ -25,4 +25,10 @@ router.post('/logon', async function (req, res) {
     res.json(result);
 });
 
+router.put('/finishLogon', async function (req, res) {
+    const result = await userService.finishLogon(req.body);
+    console.log(result);
+    res.json(result);
+});
+
 module.exports = router;

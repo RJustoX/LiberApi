@@ -20,6 +20,14 @@ exports.insertUser = async function (user) {
     '${user.name}','${user.email}','${user.nickname}','${user.password}')`);
 }
 
+exports.updateUserBasicInformation = async function (id, birthdate, sex) {
+    await database.query(`UPDATE TB_Usuario set dt_nascimento = '${birthdate}', fl_sexo = '${sex}' WHERE id_usuario = '${id}'`)
+}
+
+exports.insertVicio = async function (userId, vicioId) {
+    await database.query(`INSERT INTO TB_Usuario_Vicio values ('${userId}','${vicioId}')`)
+}
+
 exports.getNextId = async function () {
     return await database.query("SELECT currval('sq_usuario')");
 }
