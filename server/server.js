@@ -7,6 +7,7 @@ console.log('iniciando api...');
 
 app.use(bodyParser.json());
 app.use('/', require('./routes/userRoutes'));
+app.use('/', require('./routes/vicioRoutes'));
 
 app.listen(port, () => {
     console.log(`Server is running at port: ${port}`);

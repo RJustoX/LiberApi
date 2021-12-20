@@ -6,7 +6,6 @@ const userService = require('../service/userService');
 router.get('/users', async function (req, res) {
     const users = await userService.getUsers();
     res.json(users);
-
 });
 
 router.get('/user/:id', async function (req, res) {
