@@ -10,14 +10,15 @@ router.get('/users', async function (req, res) {
 
 router.get('/user/:id', async function (req, res) {
     const user = await userService.getUser(req.params.id);
+    console.log(user.rows[0]);
     res.json(user.rows[0]);
 });
 
 router.post('/login', async function (req, res) {
     const { email, password } = req.body;
-    const userId = await userService.postLogin(email, password);
-
-    res.json(userId.rows[0]['id_usuario']);
+    const result = await userService.postLogin(email, password);
+    console.log(result);
+    res.json(result.id['id_usuario']);
 });
 
 router.post('/logon', async function (req, res) {
@@ -26,7 +27,20 @@ router.post('/logon', async function (req, res) {
 });
 
 router.put('/finishLogon', async function (req, res) {
+    console.log(req.body);
     const result = await userService.finishLogon(req.body);
+    console.log(result);
+    res.json(result);
+});
+
+router.put('/changeAvatar', async function (req, res) {
+    const result = await userService.changeAvatar(req.body);
+    console.log(result);
+    res.json(result);
+});
+
+router.post('/insertNewVicio', async function (req, res) {
+    const result = await userService.insertNewVicio(req.body);
     console.log(result);
     res.json(result);
 });

@@ -8,8 +8,20 @@ exports.getUser = function (userId) {
     return userData.getUser(userId);
 }
 
-exports.postLogin = function (email, password) {
-    return userData.postLogin(email, password);
+exports.postLogin = async function (email, password) {
+    const result = {
+        status: 0,
+        message: 'Usuário não cadastrado'
+    };
+    user = await userData.postLogin(email, password);
+    if (user.rows[0]['id_usuario']) {
+        result.status = 1;
+        result.message = 'Usuário encontrado';
+        result.id = user.rows[0];
+    };
+
+
+    return result;
 }
 
 exports.createNewUser = async function (user) {
@@ -54,3 +66,34 @@ async function checkEmail(email) {
 
     return true;
 }
+
+
+exports.changeAvatar = async function (user) {
+    const result = {
+        status: 0,
+        message: 'Não foi possivel alterar a foto de perfil',
+    };
+
+    if (user.id && user.avatar) {
+        await userData.changeAvatar(user.id, user.avatar);
+        result.status = 1;
+        result.message = 'Avatar alterado com sucesso';
+    }
+
+    return result;
+};
+
+exports.insertNewVicio = async function (user) {
+    const result = {
+        status: 0,
+        message: 'Não foi possivel inserir o vicio',
+    };
+
+    if (user.userId && user.vicioId) {
+        await userData.insertVicio(user.userId, user.vicioId);
+        result.status = 1;
+        result.message = 'Vicio inserido com sucesso';
+    }
+
+    return result;
+};

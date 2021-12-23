@@ -4,6 +4,7 @@ const vicioService = require('../service/vicioService');
 
 router.get('/vicios', async function (req, res) {
     const vicios = (await vicioService.getAllVicios()).rows;
+    console.log(vicios);
     res.json(vicios);
 });
 

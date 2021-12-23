@@ -24,6 +24,10 @@ exports.updateUserBasicInformation = async function (id, birthdate, sex) {
     await database.query(`UPDATE TB_Usuario set dt_nascimento = '${birthdate}', fl_sexo = '${sex}' WHERE id_usuario = '${id}'`)
 }
 
+exports.changeAvatar = async function (id, avatar) {
+    await database.query(`UPDATE TB_Usuario SET nm_avatar = '${avatar}' WHERE id_usuario = '${id}'`);
+}
+
 exports.insertVicio = async function (userId, vicioId) {
     await database.query(`INSERT INTO TB_Usuario_Vicio values ('${userId}','${vicioId}')`)
 }
