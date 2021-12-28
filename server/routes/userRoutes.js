@@ -45,4 +45,23 @@ router.post('/insertNewVicio', async function (req, res) {
     res.json(result);
 });
 
+router.get('/goals/:id', async function (req, res) {
+    const result = await userService.getUserGoals(req.params.id);
+    res.json(result);
+});
+
+router.put('/newGoal', async function (req, res) {
+    console.log(req.body);
+    const result = await userService.insertGoal(req.body);
+    console.log(result);
+    res.json(result);
+});
+
+router.get('/deleteGoal/:id', async function (req, res) {
+    console.log(req.params.id);
+    const result = await userService.deleteGoal(req.params.id);
+    console.log(result);
+    res.json(result);
+});
+
 module.exports = router;

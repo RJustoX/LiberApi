@@ -97,3 +97,53 @@ exports.insertNewVicio = async function (user) {
 
     return result;
 };
+
+exports.getUserGoals = async function (id) {
+    const result = {
+        status: 0,
+        message: 'Nenhuma meta cadastrada',
+    };
+
+    if (id) {
+        goals = await userData.getUserGoals(id);
+        if (goals) {
+            console.log(goals.rows);
+            result.status = 1;
+            result.message = 'Metas encontradas com sucesso';
+            result.value = goals.rows;
+        }
+    }
+
+    return result;
+};
+
+exports.insertGoal = async function (goal) {
+    const result = {
+        status: 0,
+        message: 'Não foi possivel cadastrar a meta',
+    };
+
+    if (goal) {
+        console.log(goal);
+        await userData.insertGoal(goal);
+        result.status = 1;
+        result.message = 'Meta cadastrada com sucesso';
+    }
+
+    return result;
+};
+
+exports.deleteGoal = async function (goalId) {
+    const result = {
+        status: 0,
+        message: 'Não foi possivel excluir a meta',
+    };
+
+    if (goalId) {
+        await userData.deleteGoal(goalId);
+        result.status = 1;
+        result.message = 'Meta excluida com sucesso';
+    }
+
+    return result;
+};

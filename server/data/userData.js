@@ -35,3 +35,17 @@ exports.insertVicio = async function (userId, vicioId) {
 exports.getNextId = async function () {
     return await database.query("SELECT currval('sq_usuario')");
 }
+
+exports.getUserGoals = async function (id) {
+    return await database.query(`SELECT * from tb_meta WHERE id_usuario = '${id}'`);
+}
+
+exports.insertGoal = async function (goal) {
+    await database.query(`INSERT INTO tb_meta(id_meta, id_usuario, nm_meta, vl_meta, fl_ativa, fl_concluida, nu_pontuacao, ds_meta, nm_avatar)
+     values (nextval('sq_meta'),'${goal.userId}','${goal.title}','${goal.value}','${goal.active}','${goal.done}',
+     '${goal.pontos}','${goal.desc}','${goal.avatar}')`);
+}
+
+exports.deleteGoal = async function (goalId) {
+    await database.query(`DELETE FROM tb_meta WHERE id_meta = '${goalId}'`);
+}
