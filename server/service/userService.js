@@ -147,3 +147,18 @@ exports.deleteGoal = async function (goalId) {
 
     return result;
 };
+
+exports.editGoal = async function (goal) {
+    const result = {
+        status: 0,
+        message: 'Não foi possivel editar a meta',
+    };
+
+    if (goal) {
+        await userData.editGoal(goal);
+        result.status = 1;
+        result.message = 'Meta alterada com sucesso';
+    }
+
+    return result;
+};

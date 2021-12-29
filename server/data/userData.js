@@ -49,3 +49,8 @@ exports.insertGoal = async function (goal) {
 exports.deleteGoal = async function (goalId) {
     await database.query(`DELETE FROM tb_meta WHERE id_meta = '${goalId}'`);
 }
+
+exports.editGoal = async function (goal) {
+    await database.query(`UPDATE tb_meta SET nm_meta = 
+    '${goal.title}', vl_meta = '${goal.value}', fl_ativa = '${goal.active}', ds_meta = '${goal.desc}' WHERE id_meta = '${goal.metaId}'`);
+}

@@ -64,4 +64,11 @@ router.get('/deleteGoal/:id', async function (req, res) {
     res.json(result);
 });
 
+router.put('/editGoal', async function (req, res) {
+    console.log(req.body);
+    const result = await userService.editGoal(req.body);
+    console.log(result);
+    res.json(result);
+});
+
 module.exports = router;
