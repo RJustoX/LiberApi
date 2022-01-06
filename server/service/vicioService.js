@@ -30,6 +30,5 @@ exports.getUserVicios = async function (userId) {
         result.message = 'Vicios encontrados com sucesso';
     }
 
-
     return result;
 }
