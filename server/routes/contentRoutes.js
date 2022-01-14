@@ -22,17 +22,15 @@ router.get('/getVicioTips/:id', async function (req, res) {
     res.json(tips);
 });
 
-router.put('/newTip', async function (req, res) {
-    console.log(req.body);
-    const result = await contentService.insertReport(req.body);
-    console.log(result);
-    res.json(result);
-});
-
 router.put('/newReport', async function (req, res) {
     console.log(req.body);
     const result = await contentService.insertReport(req.body);
-    console.log(result);
+    res.json(result);
+});
+
+router.put('/newTip', async function (req, res) {
+    console.log(req.body);
+    const result = await contentService.insertTip(req.body);
     res.json(result);
 });
 

@@ -93,10 +93,24 @@ exports.insertReport = async function (report) {
     };
 
     if (report) {
-        console.log(report);
         await contentData.insertReport(report);
         result.status = 1;
         result.message = 'Relato publicado com sucesso';
+    }
+
+    return result;
+};
+
+exports.insertTip = async function (tip) {
+    const result = {
+        status: 0,
+        message: 'Não foi publicar a dica',
+    };
+
+    if (tip) {
+        await contentData.insertTip(tip);
+        result.status = 1;
+        result.message = 'Dica publicada com sucesso';
     }
 
     return result;

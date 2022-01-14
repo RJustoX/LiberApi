@@ -25,3 +25,9 @@ exports.insertReport = async function (report) {
      values (nextval('sq_conteudo'),'${report.id_usuario}','${report.id_vicio}','${report.id_motivo}','${report.fl_anonimo}','${false}',
      '${report.ds_relato}','${report.nm_titulo}','${report.nu_likes}')`);
 }
+
+exports.insertTip = async function (report) {
+    await database.query(`INSERT INTO tb_conteudo(id_conteudo, id_usuario, id_vicio, id_categoria, fl_anonimo, fl_dica, ds_dica, nu_likes)
+     values (nextval('sq_conteudo'),'${report.id_usuario}','${report.id_vicio}','${report.id_categoria}','${report.fl_anonimo}','${true}',
+     '${report.ds_dica}','${report.nu_likes}')`);
+}
