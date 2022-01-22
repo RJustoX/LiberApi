@@ -13,12 +13,12 @@ router.get('/vicioReasons/:id', async function (req, res) {
 });
 
 router.get('/getVicioReports/:id', async function (req, res) {
-    const reports = await contentService.getVicioReports(req.params.id);
+    const reports = await contentService.getVicioReports(req.params.id, req.headers.userid);
     res.json(reports);
 });
 
 router.get('/getVicioTips/:id', async function (req, res) {
-    const tips = await contentService.getVicioTips(req.params.id);
+    const tips = await contentService.getVicioTips(req.params.id, req.headers.userid);
     res.json(tips);
 });
 
@@ -31,6 +31,12 @@ router.put('/newReport', async function (req, res) {
 router.put('/newTip', async function (req, res) {
     console.log(req.body);
     const result = await contentService.insertTip(req.body);
+    res.json(result);
+});
+
+router.put('/like', async function (req, res) {
+    console.log(req.body);
+    const result = await contentService.likeContent(req.body);
     res.json(result);
 });
 

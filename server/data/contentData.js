@@ -31,3 +31,27 @@ exports.insertTip = async function (report) {
      values (nextval('sq_conteudo'),'${report.id_usuario}','${report.id_vicio}','${report.id_categoria}','${report.fl_anonimo}','${true}',
      '${report.ds_dica}','${report.nu_likes}')`);
 }
+
+exports.getTipByCategory = async function (categoryId, vicioId) {
+    return await database.query(`SELECT * FROM tb_conteudo WHERE id_categoria = '${categoryId}' AND id_vicio = '${vicioId}'`);
+}
+
+exports.getReportByReason = async function (reasonId, vicioId) {
+    return await database.query(`SELECT * FROM tb_conteudo WHERE id_motivo = '${reasonId}' AND id_vicio = '${vicioId}'`);
+}
+
+exports.getContentLikes = async function (contentId) {
+    return await database.query(`SELECT count(*) FROM tb_likes where id_conteudo = '${contentId}'`);
+}
+
+exports.userHasLiked = async function (contentId, userId, vicioId) {
+    return await database.query(`SELECT * FROM tb_likes WHERE id_usuario = '${userId}' and id_conteudo = '${contentId}' and id_vicio = '${vicioId}'`);
+}
+
+exports.likeContent = async function (contentId, userId, vicioId) {
+    return await database.query(`INSERT INTO tb_likes(id_conteudo, id_usuario, id_vicio) Values ('${contentId}', '${userId}', '${vicioId}')`);
+}
+
+exports.unlikeContent = async function (contentId, userId, vicioId) {
+    return await database.query(`DELETE FROM tb_likes WHERE  id_conteudo = '${contentId}' and id_usuario = '${userId}' and id_vicio = '${vicioId}'`);
+}

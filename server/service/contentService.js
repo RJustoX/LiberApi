@@ -34,7 +34,7 @@ exports.getVicioReasons = async function (vicioId) {
     return result;
 };
 
-exports.getVicioReports = async function (vicioId) {
+exports.getVicioReports = async function (vicioId, userId) {
     const result = {
         status: 0,
         message: 'Não foi possivel carregar os relatos',
@@ -45,6 +45,12 @@ exports.getVicioReports = async function (vicioId) {
 
         for (const report of reports) {
             report.user = (await contentData.getUserData(report.id_usuario)).rows;
+            let likes = (await contentData.getContentLikes(report.id_conteudo)).rows[0].count;
+            console.log(report.id_conteudo, parseInt(userId), report.id_vicio);
+            let liked = (await contentData.userHasLiked(report.id_conteudo, parseInt(userId), report.id_vicio)).rowCount;
+            console.log(liked);
+            report.liked = liked == 0 ? false : true;
+            report.nu_likes = parseInt(likes);
             if (report.fl_anonimo == true) {
                 report.user[0].ds_nickname = 'Anonimo';
                 report.user[0].nm_avatar = '';
@@ -56,7 +62,7 @@ exports.getVicioReports = async function (vicioId) {
         result.message = 'Relatos encontrados com sucesso!'
         result.value = reports;
     }
-
+    //console.log(result);
     return result;
 };
 
@@ -71,6 +77,10 @@ exports.getVicioTips = async function (vicioId) {
 
         for (const tip of tips) {
             tip.user = (await contentData.getUserData(tip.id_usuario)).rows;
+            let likes = (await contentData.getContentLikes(tip.id_conteudo)).rows[0].count;
+            let liked = (await contentData.userHasLiked(tip.id_conteudo, tip.id_usuario, tip.id_vicio)).rowCount;
+            tip.liked = liked == 0 ? false : true;
+            tip.nu_likes = parseInt(likes);
             if (tip.fl_anonimo == true) {
                 tip.user[0].ds_nickname = 'Anonimo';
                 tip.user[0].nm_avatar = '';
@@ -81,6 +91,35 @@ exports.getVicioTips = async function (vicioId) {
         result.status = 1;
         result.message = 'Dicas encontrados com sucesso!'
         result.value = tips;
+    }
+
+    return result;
+};
+
+exports.likeContent = async function (params) {
+    const result = {
+        status: 0,
+        message: 'Não foi possivel curtir a publicação'
+    }
+
+    if (params) {
+        if (JSON.parse(params.add)) {
+            try {
+                await contentData.likeContent(params.content.contentId, params.content.userId, params.content.vicioId);
+                result.status = 1;
+                result.message = 'Não foi possivel curtir a publicação';
+            } catch (error) {
+                console.log('Ocorreu um erro');
+            }
+        } else {
+            try {
+                await contentData.unlikeContent(params.content.contentId, params.content.userId, params.content.vicioId);
+                result.status = 1;
+                result.message = 'Não foi possivel descurtir a publicação';
+            } catch (error) {
+                console.log('Ocorreu um erro');
+            }
+        }
     }
 
     return result;
