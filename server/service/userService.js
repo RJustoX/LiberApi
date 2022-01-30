@@ -57,6 +57,24 @@ exports.finishLogon = function (user) {
     }
 }
 
+exports.updateUserData = async function (user) {
+    console.log(user);
+    result = {
+        status: 1,
+        message: 'Dados atualizados!',
+    }
+
+    if (user) {
+        try {
+            await userData.updateUserData(user);
+        } catch (error) {
+            result.status = 0;
+            result.message = 'Não foi possivel atualizar os dados'
+        }
+    }
+    return result;
+}
+
 async function checkEmail(email) {
     const result = (await userData.checkEmail(email)).rowCount;
 

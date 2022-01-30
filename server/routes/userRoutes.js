@@ -39,6 +39,14 @@ router.put('/changeAvatar', async function (req, res) {
     res.json(result);
 });
 
+router.put('/updateUser', async function (req, res) {
+    console.log(req.body);
+    const result = await userService.updateUserData(req.body);
+    console.log(result);
+    res.json(result);
+});
+
+
 router.post('/insertNewVicio', async function (req, res) {
     const result = await userService.insertNewVicio(req.body);
     console.log(result);

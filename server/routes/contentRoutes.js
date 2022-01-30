@@ -34,6 +34,12 @@ router.put('/newTip', async function (req, res) {
     res.json(result);
 });
 
+router.delete('/deleteContent/:id', async function (req, res) {
+    console.log(req.params.id);
+    const result = await contentService.deleteContent(req.params.id);
+    res.json(result);
+});
+
 router.put('/like', async function (req, res) {
     console.log(req.body);
     const result = await contentService.likeContent(req.body);

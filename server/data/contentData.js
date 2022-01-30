@@ -21,15 +21,15 @@ exports.getTips = async function (vicioId) {
 }
 
 exports.insertReport = async function (report) {
-    await database.query(`INSERT INTO tb_conteudo(id_conteudo, id_usuario, id_vicio, id_motivo, fl_anonimo, fl_dica, ds_relato, nm_titulo, nu_likes)
+    await database.query(`INSERT INTO tb_conteudo(id_conteudo, id_usuario, id_vicio, id_motivo, fl_anonimo, fl_dica, ds_relato, nm_titulo)
      values (nextval('sq_conteudo'),'${report.id_usuario}','${report.id_vicio}','${report.id_motivo}','${report.fl_anonimo}','${false}',
-     '${report.ds_relato}','${report.nm_titulo}','${report.nu_likes}')`);
+     '${report.ds_relato}','${report.nm_titulo}')`);
 }
 
 exports.insertTip = async function (report) {
-    await database.query(`INSERT INTO tb_conteudo(id_conteudo, id_usuario, id_vicio, id_categoria, fl_anonimo, fl_dica, ds_dica, nu_likes)
+    await database.query(`INSERT INTO tb_conteudo(id_conteudo, id_usuario, id_vicio, id_categoria, fl_anonimo, fl_dica, ds_dica)
      values (nextval('sq_conteudo'),'${report.id_usuario}','${report.id_vicio}','${report.id_categoria}','${report.fl_anonimo}','${true}',
-     '${report.ds_dica}','${report.nu_likes}')`);
+     '${report.ds_dica}')`);
 }
 
 exports.getTipByCategory = async function (categoryId, vicioId) {
@@ -54,4 +54,8 @@ exports.likeContent = async function (contentId, userId, vicioId) {
 
 exports.unlikeContent = async function (contentId, userId, vicioId) {
     return await database.query(`DELETE FROM tb_likes WHERE  id_conteudo = '${contentId}' and id_usuario = '${userId}' and id_vicio = '${vicioId}'`);
+}
+
+exports.deleteContent = async function (contentId) {
+    await database.query(`DELETE FROM tb_conteudo WHERE id_conteudo = '${contentId}'`);
 }

@@ -46,9 +46,8 @@ exports.getVicioReports = async function (vicioId, userId) {
         for (const report of reports) {
             report.user = (await contentData.getUserData(report.id_usuario)).rows;
             let likes = (await contentData.getContentLikes(report.id_conteudo)).rows[0].count;
-            console.log(report.id_conteudo, parseInt(userId), report.id_vicio);
             let liked = (await contentData.userHasLiked(report.id_conteudo, parseInt(userId), report.id_vicio)).rowCount;
-            console.log(liked);
+            report.isOwner = report.id_usuario == userId;
             report.liked = liked == 0 ? false : true;
             report.nu_likes = parseInt(likes);
             if (report.fl_anonimo == true) {
@@ -62,11 +61,11 @@ exports.getVicioReports = async function (vicioId, userId) {
         result.message = 'Relatos encontrados com sucesso!'
         result.value = reports;
     }
-    //console.log(result);
+
     return result;
 };
 
-exports.getVicioTips = async function (vicioId) {
+exports.getVicioTips = async function (vicioId, userId) {
     const result = {
         status: 0,
         message: 'Não foi possivel carregar as dicas',
@@ -78,7 +77,8 @@ exports.getVicioTips = async function (vicioId) {
         for (const tip of tips) {
             tip.user = (await contentData.getUserData(tip.id_usuario)).rows;
             let likes = (await contentData.getContentLikes(tip.id_conteudo)).rows[0].count;
-            let liked = (await contentData.userHasLiked(tip.id_conteudo, tip.id_usuario, tip.id_vicio)).rowCount;
+            let liked = (await contentData.userHasLiked(tip.id_conteudo, userId, tip.id_vicio)).rowCount;
+            tip.isOwner = tip.id_usuario == userId;
             tip.liked = liked == 0 ? false : true;
             tip.nu_likes = parseInt(likes);
             if (tip.fl_anonimo == true) {
@@ -150,6 +150,21 @@ exports.insertTip = async function (tip) {
         await contentData.insertTip(tip);
         result.status = 1;
         result.message = 'Dica publicada com sucesso';
+    }
+
+    return result;
+};
+
+exports.deleteContent = async function (idConteudo) {
+    const result = {
+        status: 0,
+        message: 'Não foi possivel excluir o conteúdo',
+    };
+
+    if (idConteudo) {
+        await contentData.deleteContent(idConteudo);
+        result.status = 1;
+        result.message = 'Conteúdo excluido com sucesso';
     }
 
     return result;

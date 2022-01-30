@@ -28,6 +28,11 @@ exports.changeAvatar = async function (id, avatar) {
     await database.query(`UPDATE TB_Usuario SET nm_avatar = '${avatar}' WHERE id_usuario = '${id}'`);
 }
 
+exports.updateUserData = async function (user) {
+    await database.query(`UPDATE TB_Usuario set nm_usuario = '${user.nm_usuario}', ds_email = '${user.ds_email}',
+     ds_nickname = '${user.ds_nickname}',dt_nascimento = '${user.dt_nascimento}' WHERE id_usuario = '${user.id_usuario}'`);
+}
+
 exports.insertVicio = async function (userId, vicioId) {
     await database.query(`INSERT INTO TB_Usuario_Vicio values ('${userId}','${vicioId}')`)
 }
