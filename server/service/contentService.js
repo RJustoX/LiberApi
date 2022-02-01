@@ -169,3 +169,25 @@ exports.deleteContent = async function (idConteudo) {
 
     return result;
 };
+
+exports.updateContent = async function (content) {
+    const result = {
+        status: 0,
+        message: 'Não foi possível alterar o conteúdo',
+    };
+
+    if (content) {
+
+        if (content.fl_dica) {
+            await contentData.updateTip(content);
+            result.status = 1;
+            result.message = 'Dica alterada com sucesso';
+        } else {
+            await contentData.updateReport(content);
+            result.status = 1;
+            result.message = 'Relato alterado com sucesso';
+        }
+    }
+
+    return result;
+}

@@ -59,3 +59,14 @@ exports.unlikeContent = async function (contentId, userId, vicioId) {
 exports.deleteContent = async function (contentId) {
     await database.query(`DELETE FROM tb_conteudo WHERE id_conteudo = '${contentId}'`);
 }
+
+exports.updateReport = async function (report) {
+    await database.query(`UPDATE tb_conteudo set id_motivo = '${report.id_motivo}', fl_anonimo = '${report.fl_anonimo}', 
+    ds_relato = '${report.ds_relato}', nm_titulo = '${report.nm_titulo}' WHERE id_conteudo = '${report.id_conteudo}'`);
+}
+
+exports.updateTip = async function (tip) {
+    await database.query(`UPDATE tb_conteudo set id_categoria = '${tip.id_categoria}', fl_anonimo = '${tip.fl_anonimo}', 
+    ds_dica = '${tip.ds_dica}' WHERE id_conteudo = '${tip.id_conteudo}'`);
+}
+

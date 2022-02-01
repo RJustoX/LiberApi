@@ -46,5 +46,11 @@ router.put('/like', async function (req, res) {
     res.json(result);
 });
 
+router.put('/updateContent', async function (req, res) {
+    console.log(req.body);
+    const result = await contentService(req.body);
+    res.json(result);
+});
+
 
 module.exports = router;
