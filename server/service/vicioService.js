@@ -10,6 +10,15 @@ exports.getVicio = async function (vicioId, userId) {
     return vicio;
 }
 
+exports.getDoencas = async function (vicioId) {
+    const doenca = {
+        values: [],
+    };
+    doenca.values = await (await vicioData.getVicioDiseases(vicioId)).rows;
+    console.log(doenca);
+    return doenca;
+}
+
 exports.getUserVicios = async function (userId) {
     const result = {
         status: 0,

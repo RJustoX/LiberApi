@@ -46,9 +46,9 @@ exports.createNewUser = async function (user) {
 }
 
 exports.finishLogon = function (user) {
-    console.log(user.vicioId);
+    console.log(user);
     if (user) {
-        userData.updateUserBasicInformation(user.id, user.birthDate, user.sex);
+        userData.updateUserBasicInformation(user.id, user.birthDate, user.sex, user.daySave);
         userData.insertVicio(user.id, user.vicioId);
     }
     return {

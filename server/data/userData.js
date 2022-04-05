@@ -20,8 +20,9 @@ exports.insertUser = async function (user) {
     '${user.name}','${user.email}','${user.nickname}','${user.password}')`);
 }
 
-exports.updateUserBasicInformation = async function (id, birthdate, sex) {
-    await database.query(`UPDATE TB_Usuario set dt_nascimento = '${birthdate}', fl_sexo = '${sex}' WHERE id_usuario = '${id}'`)
+exports.updateUserBasicInformation = async function (id, birthdate, sex, daySave) {
+    console.log(daySave);
+    await database.query(`UPDATE TB_Usuario set dt_nascimento = '${birthdate}', fl_sexo = '${sex}', vl_diario = '${daySave}' WHERE id_usuario = '${id}'`)
 }
 
 exports.changeAvatar = async function (id, avatar) {

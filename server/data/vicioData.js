@@ -15,3 +15,7 @@ exports.getVicioScore = async function (vicioId, userId) {
 exports.getUserVicios = async function (userId) {
     return await database.query(`SELECT * from tb_usuario_vicio WHERE id_usuario = '${userId}'`);
 }
+
+exports.getVicioDiseases = async function (vicioId) {
+    return await database.query(`SELECT * FROM tb_doenca a, tb_doenca_vicio b WHERE b.id_vicio = '${vicioId}'  and a.id_doenca = b.id_doenca`);
+}

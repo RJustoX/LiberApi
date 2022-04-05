@@ -10,6 +10,7 @@ router.get('/users', async function (req, res) {
 
 router.get('/user/:id', async function (req, res) {
     const user = await userService.getUser(req.params.id);
+    console.log(user);
     console.log(user.rows[0]);
     res.json(user.rows[0]);
 });
@@ -23,6 +24,7 @@ router.post('/login', async function (req, res) {
 
 router.post('/logon', async function (req, res) {
     const result = await userService.createNewUser(req.body);
+
     res.json(result);
 });
 

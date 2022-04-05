@@ -19,5 +19,11 @@ router.get('/getVicio', async function (req, res) {
     res.json(vicio);
 });
 
+router.get('/getDoencas/:id', async function (req, res) {
+    console.log(req.params)
+    const doencas = (await vicioService.getDoencas(req.params.id));
+    console.log(doencas);
+    res.json(doencas);
+});
 
 module.exports = router;
